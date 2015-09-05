@@ -8,8 +8,17 @@ gutil = require 'gulp-util'
 jade = require 'gulp-jade'
 sass = require 'gulp-sass'
 
-gulp.task 'clean', ->
-  del.sync [ 'build' ]
+gulp.task 'clean:tmp', ->
+  del.sync [ 'tmp' ]
+
+gulp.task 'clean:build:html', ->
+  del.sync [ 'build/index.html' ]
+
+gulp.task 'clean:build:js', ->
+  del.sync [ 'build/js/main.js' ]
+
+gulp.task 'clean:build:css', ->
+  del.sync [ 'build/css/main.css' ]
 
 gulp.task 'copy', ->
   gulp.src('src/index.html')
@@ -36,7 +45,7 @@ gulp.task 'sass', ->
     .pipe(sass().on('error', gutil.log))
     .pipe(gulp.dest('build/css'))
 
-gulp.task 'scripts', ->
+gulp.task 'scripts', ['coffee'], ->
   gulp.src('tmp/js/main.js')
     .pipe(browserify({}))
     .pipe(gulp.dest('build/js'))
@@ -46,18 +55,27 @@ gulp.task 'listen', ->
   livereload.listen()
 
 gulp.task 'watch:coffee', ->
-  gulp.watch 'src/**/*.coffee', [ 'build' ]
+  gulp.watch 'src/**/*.coffee', [
+    'clean:tmp'
+    'clean:build:js'
+    'scripts'
+  ]
 
 gulp.task 'watch:jade', ->
-  gulp.watch 'src/**/*.jade', [ 'build' ]
+  gulp.watch 'src/**/*.jade', [
+    'clean:build:html',
+    'jade'
+  ]
 
 gulp.task 'watch:sass', ->
-  gulp.watch 'src/**/*.sass', [ 'build' ]
+  gulp.watch 'src/**/*.sass', [
+    'clean:build:css',
+    'sass'
+  ]
 
 gulp.task 'build', [
   'clean'
   'copy'
-  'coffee'
   'jade'
   'sass'
   'scripts'
