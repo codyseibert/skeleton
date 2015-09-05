@@ -1,3 +1,4 @@
 client/build/
 client/bower_components/
 client/node_modules/
+client/tmp/

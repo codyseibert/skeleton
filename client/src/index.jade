@@ -1,0 +1,26 @@
+html
+  head
+    link(rel='stylesheet', href='css/bootstrap.css')
+    link(rel='stylesheet', href='css/main.css')
+    script(src='js/main.js')
+  body
+    #someDiv
+      | hi
+    .row
+      .col-md-6(style='background-color: red;')
+        | abbbdd
+      .col-md-6(style='background-color: blue;')
+        .btn-group
+          button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            | Action
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='#') Action
+            li
+              a(href='#') Another action
+            li
+              a(href='#') Something else here
+            li.divider(role='separator')
+            li
+              a(href='#') Separated link
